@@ -105,3 +105,20 @@ a {
     color-scheme: dark;
   }
 }
+
+.hideScrollBar::-webkit-scrollbar{
+  display: none;
+}
+
+.h100{
+  height: 100px !important;
+}
+.inH{
+  height: 10px !important;
+}
+
+.transit{
+  transition: height 2s ease;
+}
+
+
