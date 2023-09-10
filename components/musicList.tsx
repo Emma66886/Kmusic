@@ -27,18 +27,18 @@ function MusicList({isDashboard,children,count,musicListHeight,musicList}:Prop) 
     const allMusicItems = useMemo(()=>{
         if(musicList&&musicList.length > 0){
             return musicList.map(({trackName,id,name,source,track,duration},i)=>
-            <MusicListItem key={i+"musicLisiItem"} id={i.toString()} number={(i+1).toString().length > 1 ?i+1 :`0${i+1}`} 
+            <MusicListItem key={i+"musicLisiItem"+id} id={i.toString()} number={(i+1).toString().length > 1 ?i+1 :`0${i+1}`} 
             image={""} name={trackName} duration={duration} singer={""}/>)
         }
         if(musicList && musicList.length === 0){
-            return [<Flex alignItems='center' justifyContent='center' w='100%'>
+            return [<Flex key={"musicListItem"+musicList.length} alignItems='center' justifyContent='center' w='100%'>
                 <Text>NO ITEM HERE</Text>
             </Flex>]
         }
         return dummyMusics.map(({artist,title,duration},i)=>
         <MusicListItem key={i+"musicLisiItem"} id={i.toString()} number={(i+1).toString().length > 1 ?i+1 :`0${i+1}`} 
         image={artist.picture_big} name={title} duration={parseInt(duration)} singer={artist.name}/>)
-    },[count])
+    },[count,musicList])
   return (
     <Flex flexDir='column' w='100%' gap='5' h='max-content'>
         {isDashboard  && <Flex justifyContent='space-between' w='100%' alignItems='flex-end'>
