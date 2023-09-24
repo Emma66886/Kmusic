@@ -37,7 +37,7 @@ function MusicListItem({number,image,name,singer,duration,id,musicData}:Prop) {
         return trackTime;    
     }
     const textGrad = isActive ? {
-        bgGradient:'linear(to-r,100,200)', bgClip:'text',fontWeight:'500'
+        bgGradient:'linear(to-r,#B5179E,#7209B7)', bgClip:'text',fontWeight:'500'
     } : {}
     useEffect(()=>{
         if(musicData){

@@ -54,8 +54,8 @@ function MusicList({isDashboard,children,count,musicListHeight,musicList}:Prop) 
                 <Text fontSize='1.2em' fontWeight='700'>Top Musics</Text>
             </Flex>
             <Link href='' style={{display:'flex',flexDirection:'column'}}>
-                <Text bgGradient='linear(to-r,100,200)' bgClip='text'>Show More {">>"}</Text>
-                <Box bgGradient={'linear(to-r,100,200)'} w='100%' h='1px'/>
+                <Text bgGradient='linear(to-r,#B5179E,#7209B7)' bgClip='text'>Show More {">>"}</Text>
+                <Box bgGradient={'linear(to-r,#B5179E,#7209B7)'} w='100%' h='1px'/>
             </Link>
         </Flex> }
         {!isDashboard && children}

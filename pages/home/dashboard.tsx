@@ -1,3 +1,4 @@
+"use client"
 import Discover from '@/components/discover'
 import Localmusics from '@/components/localmusics'
 import MusicList from '@/components/musicList'

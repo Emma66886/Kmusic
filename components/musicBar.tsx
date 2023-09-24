@@ -131,7 +131,7 @@ function MusicBar() {
                         seek((e/100)*duration)
                     }} borderRadius={'20px'} aria-label='slider-ex-4' value={(position / duration) * 100} defaultValue={30}>
                         <SliderTrack  borderRadius={'20px'}bg='#464646'>
-                            <SliderFilledTrack borderRadius={'20px'} bgGradient='linear(to-r,100,200)' />
+                            <SliderFilledTrack borderRadius={'20px'} bgGradient='linear(to-r,#B5179E,#7209B7)' />
                         </SliderTrack>
                         <SliderThumb boxSize={4}>
                             <Box  color='200' as={MdGraphicEq} />
@@ -151,7 +151,7 @@ function MusicBar() {
                     {/* <Progress h='5px' bgGradient='linear(to-r,100,200)' w='100%' borderRadius={'20px'}/> */}
                     <Slider borderRadius={'20px'} aria-label='slider-ex-4' onChange={e=>setVolume(e/100)} defaultValue={volume*100}>
                         <SliderTrack  borderRadius={'20px'}bg='#464646'>
-                            <SliderFilledTrack borderRadius={'20px'} bgGradient='linear(to-r,100,200)' />
+                            <SliderFilledTrack borderRadius={'20px'} bgGradient='linear(to-r,#B5179E,#7209B7)' />
                         </SliderTrack>
                         <SliderThumb boxSize={2}>
                             <Box  color='200' as={MdGraphicEq} />

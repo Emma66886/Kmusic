@@ -16,9 +16,9 @@ function NavItem({Icon,link,text}:navProps) {
   const active = currentItem === link?.toLowerCase()
   return (
       <Link style={{width:'100%'}} href={link}>
-    <Flex gap='5' w='100%' p="10px 20px" borderRadius='5px' onClick={e=>setCurrentitem(link?.toLowerCase() as string)} alignItems='center'  justifyContent='flex-start' bgGradient={active ? "linear(to-r,100,200)" : ''}>
+    <Flex gap='5' w='100%' p="10px 20px" borderRadius='5px' onClick={e=>setCurrentitem(link?.toLowerCase() as string)} alignItems='center'  justifyContent='flex-start' bgGradient={active ? "linear(to-r,#B5179E,#7209B7)" : ''}>
       <Box><Icon /></Box>
-      <Text _hover={{bgGradient:"linear(to-r,100,200)",bgClip:`${!active && "text"}`}} textAlign='left' >{text}</Text>
+      <Text _hover={{bgGradient:"linear(to-r,#B5179E,#7209B7)",bgClip:`${!active && "text"}`}} textAlign='left' >{text}</Text>
     </Flex>
     
       </Link>

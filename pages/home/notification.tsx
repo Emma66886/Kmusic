@@ -1,3 +1,4 @@
+"use client"
 import ArtistsItem from '@/components/artistsItem'
 import GradientBox from '@/components/gradientBox'
 import RecentlyPlayedItem from '@/components/recentlyPlayedItem'
