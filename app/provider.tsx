@@ -6,7 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { theme } from '@/styles'
 import { NavCtx } from '@/contexts/navCtx'
 import { MusicCtx } from '@/contexts/musicCtx'
-import GeneralWrapper from '@/pages/generalWrapper'
+import GeneralWrapper from '@/my_pages/generalWrapper'
 
 export function Providers({ 
     children 
