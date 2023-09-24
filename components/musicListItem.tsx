@@ -1,12 +1,13 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import GradientBox from './gradientBox'
 import Image from 'next/image'
 import pauseIcon from '@/assets/pause.png'
 import musicTrack from '@/assets/musictrack.png'
 import {FaPlay} from 'react-icons/fa'
 import { useMusicCtx } from '@/contexts/musicCtx'
-import {useAudioPlayer,} from 'react-use-audio-player'
+import {useAudioPlayer, useGlobalAudioPlayer,} from 'react-use-audio-player'
+import disc from '@/assets/disc.png'
 type Prop ={
     number?:string | number,
     image?:any,
@@ -14,45 +15,65 @@ type Prop ={
     singer?:string
     duration?:number,
     isActive?:boolean,
-    id:string
+    id:string,
+    musicData?:any
 }
-function MusicListItem({number,image,name,singer,duration,id}:Prop) {
+function MusicListItem({number,image,name,singer,duration,id,musicData}:Prop) {
     const {currentItem,setCurrentitem} = useMusicCtx()
-    const {duration:audDuration} = useAudioPlayer()
-    const isPlaying = false
+    const {load:loadGlobal,play,playing,pause} = useGlobalAudioPlayer()
+    const {duration:audDuration,load} = useAudioPlayer()
     const isActive = id === currentItem?.id
+    const isPlaying = isActive && playing
     const getTrackFormat = (track?:number)=> {
-        if(!track) return `00:00`
-        const sec = track % 60;
-        const min = (track-sec)/60
-        return `${(min).toString().length < 2 ? `0${min}` : min }:${(sec).toString().length < 2 ? `0${sec}` : sec}`
+        track = Math.floor(track as number)
+        const hours = Math.floor(track as number / 3600);
+        const remainingSeconds = track as number % 3600;
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+      
+        // Format the result as a string (e.g., "1:30:45" for 1 hour, 30 minutes, and 45 seconds)
+        const trackTime = `${hours > 0 ? hours + ':' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      
+        return trackTime;    
     }
     const textGrad = isActive ? {
         bgGradient:'linear(to-r,100,200)', bgClip:'text',fontWeight:'500'
     } : {}
+    useEffect(()=>{
+        if(musicData){
+            load(musicData)
+        }
+    },[musicData])
   return (
     <Flex w='100%' alignItems='center' p={5} justifyContent='space-between' h='65px' bg={isActive ? '#1D1D1D' : '#23232330'}>
         <Flex alignItems='center' gap='5'>
         <Text>{number}</Text>
         {isActive ?<GradientBox h={"max-content"} p={"2px"} w={"max-content"} borderRadius='50%'>
         <Box h='50px' w='50px' borderRadius='50%' position='relative'>
-            <Image style={{borderRadius:'50%'}} fill alt='' src={image}/>
+            <Image style={{borderRadius:'50%'}} fill alt='' src={image || disc}/>
         </Box>
         </GradientBox>
         :
         <Box h='50px' w='50px' borderRadius='50%' position='relative'>
-            <Image style={{borderRadius:'50%'}} fill alt='' src={image}/>
+            <Image style={{borderRadius:'50%'}} fill alt='' src={image || disc}/>
         </Box>}
         <Text {...textGrad} fontWeight='300' fontSize="0.9em">{singer} - {name}</Text>
         </Flex>
-        <Text {...textGrad} fontWeight='300' fontSize="0.9em">{getTrackFormat(duration )}</Text>
+        <Text {...textGrad} fontWeight='300' fontSize="0.9em">{getTrackFormat(duration || audDuration )}</Text>
         <Flex gap={5}>
-            {isPlaying && <Box position='relative' h='25px' w='25px'>
+            {isPlaying && <Box cursor='pointer' position='relative' h='25px' w='25px'>
                 <Image src={ musicTrack} alt='' fill/>
             </Box>}
-            {isPlaying ? <Box position='relative' h='25px' w='25px'>
+            {isPlaying ? <Box cursor='pointer' onClick={e=>pause()} position='relative' h='25px' w='25px'>
                 <Image src={ pauseIcon} alt='' fill/>
-            </Box> : <FaPlay style={{color:"#fff"}}/>}
+            </Box> : <FaPlay onClick={()=>{
+                loadGlobal(musicData)
+                play()
+                setCurrentitem({
+                    trackName:name as string,id,source:musicData,track:duration||audDuration
+                })
+                // console.log({id})
+                }} style={{color:"#fff",cursor:'pointer'}}/>}
         </Flex>
     </Flex>
   )

@@ -5,12 +5,15 @@ import {TfiLineDouble,TfiControlPause,TfiControlForward,TfiVolume,TfiControlPlay
 import { BsHeart, BsRepeat, BsShare, BsShuffle, } from 'react-icons/bs'
 import { MdGraphicEq } from 'react-icons/md'
 import { useAudioPlayer,useGlobalAudioPlayer } from 'react-use-audio-player'
+import { useMusicCtx } from '@/contexts/musicCtx'
 function MusicBar() {
     const [muteValue,setmuteValue] = useState(false)
     const [position,setPosition] = useState<number>(0)
     const [seekVal,setSeekVal] = useState<number>(0)
+    const {currentItem} = useMusicCtx()
+    const duration = currentItem?.track ? currentItem.track : 0
     const ref = useRef<HTMLDivElement>(null)
-   const {play,pause,duration,setVolume,volume,playing:isPlaying,stop,isLoading,fade,mute,getPosition,seek} = useGlobalAudioPlayer()
+   const {play,pause,setVolume,volume,playing:isPlaying,stop,isLoading,fade,mute,getPosition,seek,looping,loop} = useGlobalAudioPlayer()
    useEffect(()=>{
     if(isPlaying){
         setInterval(()=>{
@@ -62,31 +65,40 @@ function MusicBar() {
             {
                 label:"Shuffle",
                 Icon:BsShuffle,
-                action:()=>{}
+                action:()=>{},
+                isActive:false
             },
             {
                 label:"Repeat",
                 Icon:BsRepeat,
-                action:()=>{}
+                action:()=>{loop(!looping)},
+                isActive:looping
             },
             {
                 label:"Add to Favourite",
                 Icon:BsHeart,
-                action:()=>{}
+                action:()=>{},
+                isActive:false
             },
             {
                 label:"Share music",
                 Icon:BsShare,
-                action:()=>{}
+                action:()=>{},
+                isActive:false
             },
         ]
         const getTrackFormat = (track?:number)=> {
-            if(!track) return `00:00`
-            let sec = track % 60;
-            let min = (track-sec)/60
-            sec= Math.floor(sec)
-            return `${(min).toString().length < 2 ? `0${min}` : min }:${(sec).toString().length < 2 ? `0${sec}` : sec}`
-        }
+            track = Math.floor(track as number)
+        const hours = Math.floor(track as number / 3600);
+        const remainingSeconds = track as number % 3600;
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+      
+        // Format the result as a string (e.g., "1:30:45" for 1 hour, 30 minutes, and 45 seconds)
+        const trackTime = `${hours > 0 ? hours + ':' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      
+        return trackTime; 
+    }
   return (<>    
 <Flex className='transit' onDragEnd={toggleHeight} ref={ref} 
  h='20px' draggable  zIndex='1'pl='5' pr='5' pt='2' pb='2' boxShadow="2px -2px 10px 0px #a5a5a550"
@@ -147,11 +159,11 @@ function MusicBar() {
                     </Slider>
                 </Flex>
                 <Flex gap='5' alignItems='center' h='100%'>
-                   {actions.map(({Icon,action,label},i)=> { return <Box title={label} key={i+"controls"} cursor='pointer' onClick={action}>
+                   {actions.map(({Icon,action,label,isActive},i)=> { return <Box title={label} key={i+"controls"} cursor='pointer' onClick={action}>
 
                             {label.toLowerCase() === 'pause' ? 
                             <GradientBox height='30px' w='30px' borderRadius='50%' justifyContent='center' alignItems='center' display='flex'><Icon /></GradientBox> 
-                            :<Icon />}
+                            :<Icon style={{color: isActive ? '#7209B7' : ''}}/>}
                     </Box>})}
                 </Flex>
             </Flex>

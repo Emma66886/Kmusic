@@ -1,5 +1,5 @@
 import { Box, Flex, Text,ResponsiveValue } from '@chakra-ui/react'
-import React, { PropsWithChildren, ReactNode, useMemo } from 'react'
+import React, { PropsWithChildren, ReactNode, useEffect, useMemo } from 'react'
 import musicIcon from '@/assets/Group.png'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -10,10 +10,12 @@ export type MusicItemListType ={
     id?:string,
     name?:string,
     track?:number,
-    trackName:string,
+    trackName?:string,
     source?:string,
-    duration?:number,
-    musicData?:any
+    duration?: string,
+    musicData?:any,
+    artist?:any,
+    title?:any
 }
 
 type Prop = {
@@ -26,19 +28,22 @@ type Prop = {
 function MusicList({isDashboard,children,count,musicListHeight,musicList}:Prop) {
     const allMusicItems = useMemo(()=>{
         if(musicList&&musicList.length > 0){
-            return musicList.map(({trackName,id,name,source,track,duration},i)=>
-            <MusicListItem key={i+"musicLisiItem"+id} id={i.toString()} number={(i+1).toString().length > 1 ?i+1 :`0${i+1}`} 
-            image={""} name={trackName} duration={duration} singer={""}/>)
+            return musicList.map(({trackName,id,name,source,track,duration,artist,title,musicData},i)=>
+            <MusicListItem musicData={musicData}  key={i+"musicLisiItem"} id={i.toString()} number={(i+1).toString().length > 1 ?i+1 :`0${i+1}`} 
+        image={artist?.picture_big} name={title} duration={parseInt(duration as string)} singer={trackName || "artist.name"}/>)
         }
-        if(musicList && musicList.length === 0){
-            return [<Flex key={"musicListItem"+musicList.length} alignItems='center' justifyContent='center' w='100%'>
+        // if(musicList && musicList?.length === 0){
+            return [<Flex key={"musicListItem"} alignItems='center' justifyContent='center' w='100%'>
                 <Text>NO ITEM HERE</Text>
             </Flex>]
-        }
-        return dummyMusics.map(({artist,title,duration},i)=>
-        <MusicListItem key={i+"musicLisiItem"} id={i.toString()} number={(i+1).toString().length > 1 ?i+1 :`0${i+1}`} 
-        image={artist.picture_big} name={title} duration={parseInt(duration)} singer={artist.name}/>)
-    },[count,musicList])
+        // }
+        // return dummyMusics.map(({artist,title,duration},i)=>
+        // <MusicListItem key={i+"musicLisiItem"} id={i.toString()} number={(i+1).toString().length > 1 ?i+1 :`0${i+1}`} 
+        // image={artist.picture_big} name={title} duration={parseInt(duration)} singer={artist.name}/>)
+    },[count,musicList,musicList?.length])
+    useEffect(()=>{
+       if(musicList) console.log({musicList:musicList})
+    },[musicList])
   return (
     <Flex flexDir='column' w='100%' gap='5' h='max-content'>
         {isDashboard  && <Flex justifyContent='space-between' w='100%' alignItems='flex-end'>

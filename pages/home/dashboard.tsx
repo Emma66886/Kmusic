@@ -5,6 +5,7 @@ import SearchBar from '@/components/searchBar'
 import { Flex } from '@chakra-ui/react'
 import React from 'react'
 import Notification from './notification'
+import { dummyMusics } from '@/utils/dummyMusics'
 
 function Dashboard() {
   return (
@@ -13,7 +14,7 @@ function Dashboard() {
         <SearchBar />
         <Discover />
         <Localmusics />
-        <MusicList count={5} isDashboard={true}/>
+        <MusicList musicList={dummyMusics} count={5} isDashboard={true}/>
     </Flex>
   )
 }
