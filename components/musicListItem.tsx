@@ -69,8 +69,9 @@ function MusicListItem({number,image,name,singer,duration,id,musicData}:Prop) {
             </Box> : <FaPlay onClick={()=>{
                 loadGlobal(musicData)
                 play()
+                console.log({name})
                 setCurrentitem({
-                    trackName:name as string,id,source:musicData,track:duration||audDuration
+                    trackName:(name && singer) ?name:singer as string,id,source:musicData,track:duration||audDuration
                 })
                 // console.log({id})
                 }} style={{color:"#fff",cursor:'pointer'}}/>}

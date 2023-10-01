@@ -107,10 +107,13 @@ function MusicBar() {
                     <Box h='50px' w='50px' bg='#000' borderRadius='50%'>
                     </Box>
                 </GradientBox>
-                <Flex flexDir='column'>
+                {!currentItem?.trackName ?<Flex flexDir='column'>
                     <Text>Memories</Text>
-                    <Text fontSize='0.93m' color='#bbb' fontWeight='300'>Maron 5</Text>
-                </Flex>
+                    <Text fontSize='0.93em' color='#bbb' fontWeight='300'>Maron 5</Text>
+                </Flex>:<Flex flexDir='column'>
+                    <Text fontSize={['0.8em','0.8em','0.93em']}>{currentItem.trackName}</Text>
+                </Flex>}
+                
                 </Flex>
                 <Flex gap='3' justifyContent='space-between' alignItems='center' w={!isLargerThan500px ? '100%' : ''} h='100%'>
                    {controls.map(({Icon,action,label},i)=> { return <Box title={label} key={i+"controls"} cursor='pointer' onClick={action}>

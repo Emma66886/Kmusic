@@ -13,7 +13,7 @@ type contextType = {
 }
 
 
-const musicCtxProv = createContext <contextType >({currentItem:{trackName:""},setCurrentitem:(currentItem:CurrentItem)=>{}})
+const musicCtxProv = createContext <contextType >({} as contextType)
 export const useMusicCtx = ()=>useContext(musicCtxProv)
 
 export const MusicCtx =({children}:PropsWithChildren)=>{

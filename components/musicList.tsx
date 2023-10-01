@@ -30,7 +30,7 @@ function MusicList({isDashboard,children,count,musicListHeight,musicList}:Prop) 
         if(musicList&&musicList.length > 0){
             return musicList.map(({trackName,id,name,source,track,duration,artist,title,musicData},i)=>
             <MusicListItem musicData={musicData}  key={i+"musicLisiItem"} id={i.toString()} number={(i+1).toString().length > 1 ?i+1 :`0${i+1}`} 
-        image={artist?.picture_big} name={title} duration={parseInt(duration as string)} singer={trackName || "artist.name"}/>)
+        image={artist?.picture_big} name={title} duration={parseInt(duration as string)} singer={trackName || artist?.name}/>)
         }
         // if(musicList && musicList?.length === 0){
             return [<Flex key={"musicListItem"} alignItems='center' justifyContent='center' w='100%'>
