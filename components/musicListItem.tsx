@@ -45,26 +45,26 @@ function MusicListItem({number,image,name,singer,duration,id,musicData}:Prop) {
         }
     },[musicData])
   return (
-    <Flex w='100%' alignItems='center' p={5} justifyContent='space-between' h='65px' bg={isActive ? '#1D1D1D' : '#23232330'}>
-        <Flex alignItems='center' gap='5'>
+    <Flex w='100%' alignItems='center' borderRadius='15px' p={5} justifyContent='space-between' h='65px' bg={isActive ? '#1D1D1D' : '#23232330'}>
+        <Flex alignItems='center' gap={[3,3,'5']}>
         <Text>{number}</Text>
         {isActive ?<GradientBox h={"max-content"} p={"2px"} w={"max-content"} borderRadius='50%'>
-        <Box h='50px' w='50px' borderRadius='50%' position='relative'>
+        <Box h={['30px','30px','50px']} w={['30px','30px','50px']} borderRadius='50%' position='relative'>
             <Image style={{borderRadius:'50%'}} fill alt='' src={image || disc}/>
         </Box>
         </GradientBox>
         :
-        <Box h='50px' w='50px' borderRadius='50%' position='relative'>
+        <Box h={['30px','30px','50px']} w={['30px','30px','50px']} borderRadius='50%' position='relative'>
             <Image style={{borderRadius:'50%'}} fill alt='' src={image || disc}/>
         </Box>}
-        <Text {...textGrad} fontWeight='300' fontSize="0.9em">{singer} - {name}</Text>
+        <Text {...textGrad} fontWeight='300' fontSize={['0.7em','0.7em  ',"0.9em"]}>{singer} - {name}</Text>
         </Flex>
-        <Text {...textGrad} fontWeight='300' fontSize="0.9em">{getTrackFormat(duration || audDuration )}</Text>
-        <Flex gap={5}>
-            {isPlaying && <Box cursor='pointer' position='relative' h='25px' w='25px'>
+        <Text {...textGrad} fontWeight='300' fontSize={['0.7em','0.7em  ',"0.9em"]}>{getTrackFormat(duration || audDuration )}</Text>
+        <Flex ml='2' gap={['2','2',5]}>
+            {isPlaying && <Box cursor='pointer' position='relative' h={['15px','15px','25px']} w={['15px','15px','25px']}>
                 <Image src={ musicTrack} alt='' fill/>
             </Box>}
-            {isPlaying ? <Box cursor='pointer' onClick={e=>pause()} position='relative' h='25px' w='25px'>
+            {isPlaying ? <Box cursor='pointer' onClick={e=>pause()} position='relative' h={['15px','15px','25px']} w={['15px','15px','25px']}>
                 <Image src={ pauseIcon} alt='' fill/>
             </Box> : <FaPlay onClick={()=>{
                 loadGlobal(musicData)
