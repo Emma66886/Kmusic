@@ -1,4 +1,4 @@
-import { Box, Flex, Slide, Text, useDisclosure,Tooltip, Progress, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react'
+import { Box, Flex, Slide, Text, useDisclosure,Tooltip, Progress, Slider, SliderTrack, SliderFilledTrack, SliderThumb, useMediaQuery } from '@chakra-ui/react'
 import React,{useEffect,useRef, useState} from 'react'
 import GradientBox from './gradientBox'
 import {TfiLineDouble,TfiControlPause,TfiControlForward,TfiVolume,TfiControlPlay,TfiControlSkipForward,TfiControlSkipBackward,TfiControlBackward,TfiControlShuffle} from 'react-icons/tfi'
@@ -27,12 +27,6 @@ function MusicBar() {
    },[seekVal])
    const toggleHeight = () =>{
         const tgle = ref?.current?.classList.toggle("h100")
-        // setTimeout(()=>{
-        //     console.log({topOffSet:ref.current?.offsetTop})
-        //     setBoxStartPos(ref.current?.offsetTop)
-        //     console.log({height:ref.current?.style.height})
-        // },2100)
-        // console.log({tgle})
         }
         const controls = [
             {
@@ -99,14 +93,15 @@ function MusicBar() {
       
         return trackTime; 
     }
+    const [isLargerThan500px] = useMediaQuery('(min-width:500px)')
   return (<>    
-<Flex className='transit' onDragEnd={toggleHeight} ref={ref} 
+<Flex className='transit' justifyContent='space-between' onDragEnd={toggleHeight} ref={ref} 
  h='20px' draggable  zIndex='1'pl='5' pr='5' pt='2' pb='2' boxShadow="2px -2px 10px 0px #a5a5a550"
    w='100%' flexDir='column' bg='#111111' position='fixed' bottom='0' right='0'>
          <Box alignSelf='center' onClick={toggleHeight} _hover={{cursor:"pointer"}}>
             <TfiLineDouble />
         </Box>
-        <Flex justifyContent='space-between' alignItems='center' w='100%' bg='transparent'>
+        <Flex flexDir={['column','column','row']} justifyContent='space-between' alignItems={['flex-start','flex-start','center']} w='100%' bg='transparent'>
                 <Flex gap='5'>
                 <GradientBox h='max-content' w='max-content' p='0.5' borderRadius='50%'>
                     <Box h='50px' w='50px' bg='#000' borderRadius='50%'>
@@ -117,7 +112,7 @@ function MusicBar() {
                     <Text fontSize='0.93m' color='#bbb' fontWeight='300'>Maron 5</Text>
                 </Flex>
                 </Flex>
-                <Flex gap='3' alignItems='center' h='100%'>
+                <Flex gap='3' justifyContent='space-between' alignItems='center' w={!isLargerThan500px ? '100%' : ''} h='100%'>
                    {controls.map(({Icon,action,label},i)=> { return <Box title={label} key={i+"controls"} cursor='pointer' onClick={action}>
 
                             {label.toLowerCase() === 'pause' ? 
@@ -125,7 +120,7 @@ function MusicBar() {
                             :<Icon />}
                     </Box>})}
                 </Flex>
-                <Flex alignSelf='flex-end' flexDir='column' w='40%'>
+                <Flex alignSelf='flex-end' flexDir='column' w={['100%','100%','40%']}>
                     {/* <Progress h='5px' bgGradient='linear(to-r,100,200)' borderRadius={'20px'}/> */}
                     <Slider margin='0' onChange={e=>{
                         seek((e/100)*duration)
@@ -142,6 +137,7 @@ function MusicBar() {
                         <Text fontSize='0.9m' color='#bbb' fontWeight='300'>{getTrackFormat(duration)}</Text>
                     </Flex>
                 </Flex>
+                <Flex gap={['5',5,10]} justifyContent='space-between' w={!isLargerThan500px ? '100%' : ''}>
                 <Flex w='100px'  alignItems='center' gap='2'>
                     <Box cursor='pointer' onClick={e=>{
                         mute(muteValue)
@@ -167,6 +163,7 @@ function MusicBar() {
                     </Box>})}
                 </Flex>
             </Flex>
+                </Flex>
   </Flex>
 
   </>

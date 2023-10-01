@@ -11,7 +11,7 @@ import { dummyMusics } from '@/utils/dummyMusics'
 function Dashboard() {
   return (
     <Flex flexDir='column' gap='10' h='100vh'
-     overflowY='scroll' className='hideScrollBar'  w='57vw' p='5'>
+     overflowY='scroll' className='hideScrollBar' w='100%' maxW='100vw'  minW='57vw' p='5'>
         <SearchBar />
         <Discover />
         <Localmusics />

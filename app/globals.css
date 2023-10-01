@@ -111,14 +111,21 @@ a {
 }
 
 .h100{
-  height: 100px !important;
+  height:100px !important;
+  max-height: max-content !important;
+}
+@media (max-width:500px) {
+  .h100{
+    height: 200px !important;
+    
+  }
 }
 .inH{
   height: 10px !important;
 }
 
 .transit{
-  transition: height 2s ease;
+  transition: all 2s ease;
 }
 
 

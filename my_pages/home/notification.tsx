@@ -9,7 +9,7 @@ import React from 'react'
 import {IoMdNotificationsOutline} from 'react-icons/io'
 function Notification() {
   return (
-    <Flex flexDir='column' overflowY='scroll' className='hideScrollBar' alignItems='center' gap={10} h='100vh' pb='20' p={5} bg="#111111" w='20%'>
+    <Flex flexDir='column' overflowY='scroll' className='hideScrollBar' alignItems='center' gap={10} h='100vh' pb='20' p={5} bg="#111111" w={['max-content','max-content','max-content','20%']}>
         <Flex gap={5} alignItems='center' justifyContent='center' w='95%'>
             <Box border='1px solid #fff' h="40px" w='40px' borderRadius='50%'></Box>
             <Flex flex='1' flexDir='column' h='initital' justifyItems='space-between'>
